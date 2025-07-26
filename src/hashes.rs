@@ -1,5 +1,5 @@
 use ruint::Uint;
-use sha1::Digest;
+use sha1::Digest as _;
 
 pub mod fnv;
 pub mod murmur;
@@ -183,7 +183,7 @@ impl<T: std::fmt::UpperHex, const L: usize> From<[T; L]> for HashResult {
 }
 
 pub fn flip_endian(hash: HashResult) -> HashResult {
-    let mut data = hex::decode(hash.0).unwrap();
+    let mut data = hex::decode(hash.0).expect("Failed to decode hash result to bytes");
     data.reverse();
     data.into()
 }

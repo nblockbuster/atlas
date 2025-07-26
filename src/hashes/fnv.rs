@@ -3,7 +3,7 @@
 use super::HashResult;
 use paste::paste;
 use ruint::{Uint, uint};
-use std::ops::BitXor;
+use std::ops::BitXor as _;
 
 macro_rules! fnv_impl {
     (

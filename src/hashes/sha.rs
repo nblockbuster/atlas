@@ -1,6 +1,6 @@
 use super::HashResult;
 use paste::paste;
-use sha2::Digest;
+use sha2::Digest as _;
 
 macro_rules! sha_impl {
     (

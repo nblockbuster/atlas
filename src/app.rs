@@ -1,5 +1,4 @@
-use std::usize;
-use strum::IntoEnumIterator;
+use strum::IntoEnumIterator as _;
 
 use crate::hashes::{HashingAlgorithm, flip_endian};
 
