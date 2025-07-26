@@ -9,6 +9,7 @@ pub mod xxhash;
 // TODO: Hasher trait
 // TODO: (after hasher trait) implement seeds (murmur, xxhash)
 // TODO: Dynamically load list of all algorithms (anything implementing Hasher) (todo: how???)
+// TODO: should rearrange algorithms so that fnv0-32, fnv0-64, fnv0-128, etc., fnv1-32, fnv1-64, etc.
 
 #[derive(Clone, Debug, Default)]
 pub struct HashOptions {}

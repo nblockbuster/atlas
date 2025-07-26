@@ -24,23 +24,19 @@ log = "0.4.27"
 
 # You only need serde if you want app persistence:
 serde = { version = "1.0.219", features = ["derive"] }
-anyhow = "1.0.98"
-env_logger = "0.11.8"
-clap = { version = "4.5.41", features = ["derive", "env"] }
-sha2 = "0.10.9"
 sha1 = "0.10.6"
+sha2 = "0.10.9"
+sha3 = "0.10.8"
 md5 = "0.8.0"
+murmur2 = "0.1.0"
+xxhash-rust = { version = "0.8.15", features = ["xxh32", "xxh64", "xxh3"] }
+whirlpool = "0.10.4"
+
 itertools = "0.14.0"
 strum = "0.27.2"
 strum_macros = "0.27.2"
-num-bigint = "0.4.6"
-lazy_static = "1.5.0"
 paste = "1.0.15"
 ruint = "1.15.0"
-murmur2 = "0.1.0"
-sha3 = "0.10.8"
-xxhash-rust = { version = "0.8.15", features = ["xxh32", "xxh64", "xxh3"] }
-whirlpool = "0.10.4"
 hex = "0.4.3"
 
 # native:
