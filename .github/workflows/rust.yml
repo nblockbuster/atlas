@@ -102,8 +102,8 @@ jobs:
         override: true
 
     - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: "rust-build"
+      with:
+        prefix-key: "rust-build"
 
 
     - uses: actions-rs/cargo@v1
@@ -113,19 +113,19 @@ jobs:
         args: --verbose --release --target=${{ matrix.TARGET }}
 
     - name: Copy Plguins
-        run: |
+      run: |
         mkdir ./target/release/plugins
         cp ./target/release/*.dll ./target/release/plugins
         cp ./target/release/*.so ./target/release/plugins
         cp ./target/release/*.dylib ./target/release/plugins
         
     - name: Publish artifact
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: atlas
-          path: |
-            ./target/release/*.exe
-            ./target/release/*.pdb
-            ./target/release/*.dll
-            ./target/release/plugins
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: atlas
+        path: |
+          ./target/release/*.exe
+          ./target/release/*.pdb
+          ./target/release/*.dll
+          ./target/release/plugins
