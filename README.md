@@ -22,10 +22,15 @@ Atlas currently has the following core plugins included in this repo:
 - [XXHash](https://crates.io/crates/xxhash-rust), 32 and 64 bit
 - [XXHash3](https://crates.io/crates/xxhash-rust), 64 and 128 bit
 
-Planned hashes:
+## Planned features
+
+- [ ] Hash Reverser (FNV1-32)
+
+Hashers:
 - [ ] CRC32
 - [ ] MD6
 - [ ] Tiger
 - [ ] Whirlpool
+
 
 ### ⚠️ Atlas does not support secrets (XXHash3), or keying (SipHash) yet!
