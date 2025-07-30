@@ -118,20 +118,20 @@ jobs:
     - name: Copy Plugins (Windows)
       if: matrix.os == 'windows-latest'
       run: |
-        mkdir ./target/${{ matrix.TARGET }}/plugins
+        mkdir ./target/${{ matrix.TARGET }}/release/plugins
         cp ./target/${{ matrix.TARGET }}/release/*.dll ./target/${{ matrix.TARGET }}/release/plugins
 
     - name: Copy Plugins (Linux)
       if: matrix.os == 'ubuntu-latest'
       run: |
-        mkdir ./target/${{ matrix.TARGET }}/plugins
-        cp ./target/${{ matrix.TARGET }}/*.so ./target/${{ matrix.TARGET }}/plugins
+        mkdir ./target/${{ matrix.TARGET }}/release/plugins
+        cp ./target/${{ matrix.TARGET }}/release/*.so ./target/${{ matrix.TARGET }}/release/plugins
 
     - name: Copy Plugins (MacOS)
       if: matrix.os == 'macos-latest'
       run: |
-        mkdir ./target/${{ matrix.TARGET }}/plugins
-        cp ./target/${{ matrix.TARGET }}/*.dylib ./target/${{ matrix.TARGET }}/plugins
+        mkdir ./target/${{ matrix.TARGET }}/release/plugins
+        cp ./target/${{ matrix.TARGET }}/release/*.dylib ./target/${{ matrix.TARGET }}/release/plugins
         
     - name: Publish artifact (Windows)
       if: matrix.os == 'windows-latest'
@@ -139,9 +139,9 @@ jobs:
       with:
         name: atlas-windows-x64
         path: |
-          ./target/${{ matrix.TARGET }}/*.exe
-          ./target/${{ matrix.TARGET }}/*.pdb
-          ./target/${{ matrix.TARGET }}/plugins
+          ./target/${{ matrix.TARGET }}/release/*.exe
+          ./target/${{ matrix.TARGET }}/release/*.pdb
+          ./target/${{ matrix.TARGET }}/release/plugins
 
     - name: Publish artifact (Linux)
       if: matrix.os == 'ubuntu-latest'
@@ -149,8 +149,8 @@ jobs:
       with:
         name: atlas-linux-x64
         path: |
-          ./target/${{ matrix.TARGET }}/atlas
-          ./target/${{ matrix.TARGET }}/plugins
+          ./target/${{ matrix.TARGET }}/release/atlas
+          ./target/${{ matrix.TARGET }}/release/plugins
 
     - name: Publish artifact (MacOS-x64)
       if: matrix.TARGET == 'x86_64-apple-darwin'
@@ -158,8 +158,8 @@ jobs:
       with:
         name: atlas-macos-x64
         path: |
-          ./target/${{ matrix.TARGET }}/atlas
-          ./target/${{ matrix.TARGET }}/plugins
+          ./target/${{ matrix.TARGET }}/release/atlas
+          ./target/${{ matrix.TARGET }}/release/plugins
 
     - name: Publish artifact (MacOS-aarch64)
       if: matrix.TARGET == 'aarch64-apple-darwin'
@@ -167,5 +167,5 @@ jobs:
       with:
         name: atlas-macos-aarch64
         path: |
-          ./target/${{ matrix.TARGET }}/atlas
-          ./target/${{ matrix.TARGET }}/plugins
+          ./target/${{ matrix.TARGET }}/release/atlas
+          ./target/${{ matrix.TARGET }}/release/plugins
