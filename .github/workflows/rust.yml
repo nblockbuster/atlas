@@ -95,37 +95,60 @@ jobs:
       run: echo "${{ matrix.TARGET }}"
 
     - uses: actions/checkout@master
-    - uses: actions-rs/toolchain@v1.0.1
-      with:
-        toolchain: stable
-        target: ${{ matrix.TARGET }}
-        override: true
+
+    - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
 
     - uses: Swatinem/rust-cache@v2
       with:
         prefix-key: "rust-build"
 
+    - name: Build
+      run: cargo build --verbose --release --target=${{ matrix.TARGET }}
 
-    - uses: actions-rs/cargo@v1
-      with:
-        use-cross: true
-        command: build
-        args: --verbose --release --target=${{ matrix.TARGET }}
-
-    - name: Copy Plguins
+    - name: Copy Plugins
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        mkdir ./target/release/plugins
+        cp ./target/release/*.so ./target/release/plugins
+      if: matrix.os == 'windows-latest'
       run: |
         mkdir ./target/release/plugins
         cp ./target/release/*.dll ./target/release/plugins
-        cp ./target/release/*.so ./target/release/plugins
+      if: matrix.os == 'macos-latest'
+      run: |
+        mkdir ./target/release/plugins
         cp ./target/release/*.dylib ./target/release/plugins
         
     - name: Publish artifact
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: atlas
+        name: atlas-windows-x64
         path: |
           ./target/release/*.exe
           ./target/release/*.pdb
-          ./target/release/*.dll
+          ./target/release/plugins
+
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: atlas-linux-x64
+        path: |
+          ./target/release/atlas
+          ./target/release/plugins
+
+      if: matrix.TARGET == 'x86_64-apple-darwin'
+      uses: actions/upload-artifact@v4
+      with:
+        name: atlas-macos-x64
+        path: |
+          ./target/release/atlas
+          ./target/release/plugins
+
+      if: matrix.TARGET == 'aarch64-apple-darwin'
+      uses: actions/upload-artifact@v4
+      with:
+        name: atlas-macos-aarch64
+        path: |
+          ./target/release/atlas
           ./target/release/plugins
