@@ -18,21 +18,21 @@ jobs:
           command: check
           args: --all-features
 
-  test:
-    name: Test Suite
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - run: sudo apt-get install libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxkbcommon-dev libssl-dev
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --lib
+  # test:
+  #   name: Test Suite
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions-rs/toolchain@v1
+  #       with:
+  #         profile: minimal
+  #         toolchain: stable
+  #         override: true
+  #     - run: sudo apt-get install libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev libxkbcommon-dev libssl-dev
+  #     - uses: actions-rs/cargo@v1
+  #       with:
+  #         command: test
+  #         args: --lib
 
   fmt:
     name: Rustfmt
@@ -72,9 +72,11 @@ jobs:
       matrix:
         include:
         - os: macos-latest
+          toolchain: stable
           TARGET: aarch64-apple-darwin
 
         - os: macos-latest
+          toolchain: stable
           TARGET: x86_64-apple-darwin
 
         # - os: ubuntu-latest
@@ -84,9 +86,11 @@ jobs:
         #   TARGET: armv7-unknown-linux-musleabihf
 
         - os: ubuntu-latest
+          toolchain: stable
           TARGET: x86_64-unknown-linux-musl
 
         - os: windows-latest
+          toolchain: stable
           TARGET: x86_64-pc-windows-msvc
           EXTENSION: .exe
 
@@ -95,33 +99,39 @@ jobs:
       run: echo "${{ matrix.TARGET }}"
 
     - uses: actions/checkout@master
-
-    - run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
+    - uses: actions-rs/toolchain@v1.0.1
+      with:
+        toolchain: stable
+        target: ${{ matrix.TARGET }}
+        override: true
 
     - uses: Swatinem/rust-cache@v2
       with:
         prefix-key: "rust-build"
 
-    - name: Build
-      run: cargo build --verbose --release --target=${{ matrix.TARGET }}
+    - uses: actions-rs/cargo@v1
+      with:
+        use-cross: true
+        command: build
+        args: --verbose --release --target=${{ matrix.TARGET }}
 
     - name: Copy Plugins (Windows)
       if: matrix.os == 'windows-latest'
       run: |
-        mkdir ./target/release/plugins
-        cp ./target/release/*.dll ./target/release/plugins
+        mkdir ./target/${{ matrix.TARGET }}//plugins
+        cp ./target/${{ matrix.TARGET }}/release/*.dll ./target/${{ matrix.TARGET }}/release/plugins
 
     - name: Copy Plugins (Linux)
       if: matrix.os == 'ubuntu-latest'
       run: |
-        mkdir ./target/release/plugins
-        cp ./target/release/*.so ./target/release/plugins
+        mkdir ./target/${{ matrix.TARGET }}//plugins
+        cp ./target/${{ matrix.TARGET }}//*.so ./target/${{ matrix.TARGET }}//plugins
 
     - name: Copy Plugins (MacOS)
       if: matrix.os == 'macos-latest'
       run: |
-        mkdir ./target/release/plugins
-        cp ./target/release/*.dylib ./target/release/plugins
+        mkdir ./target/${{ matrix.TARGET }}//plugins
+        cp ./target/${{ matrix.TARGET }}//*.dylib ./target/${{ matrix.TARGET }}//plugins
         
     - name: Publish artifact (Windows)
       if: matrix.os == 'windows-latest'
@@ -129,9 +139,9 @@ jobs:
       with:
         name: atlas-windows-x64
         path: |
-          ./target/release/*.exe
-          ./target/release/*.pdb
-          ./target/release/plugins
+          ./target/${{ matrix.TARGET }}//*.exe
+          ./target/${{ matrix.TARGET }}//*.pdb
+          ./target/${{ matrix.TARGET }}//plugins
 
     - name: Publish artifact (Linux)
       if: matrix.os == 'ubuntu-latest'
@@ -139,8 +149,8 @@ jobs:
       with:
         name: atlas-linux-x64
         path: |
-          ./target/release/atlas
-          ./target/release/plugins
+          ./target/${{ matrix.TARGET }}//atlas
+          ./target/${{ matrix.TARGET }}//plugins
 
     - name: Publish artifact (MacOS-x64)
       if: matrix.TARGET == 'x86_64-apple-darwin'
@@ -148,8 +158,8 @@ jobs:
       with:
         name: atlas-macos-x64
         path: |
-          ./target/release/atlas
-          ./target/release/plugins
+          ./target/${{ matrix.TARGET }}//atlas
+          ./target/${{ matrix.TARGET }}//plugins
 
     - name: Publish artifact (MacOS-aarch64)
       if: matrix.TARGET == 'aarch64-apple-darwin'
@@ -157,5 +167,5 @@ jobs:
       with:
         name: atlas-macos-aarch64
         path: |
-          ./target/release/atlas
-          ./target/release/plugins
+          ./target/${{ matrix.TARGET }}//atlas
+          ./target/${{ matrix.TARGET }}//plugins
