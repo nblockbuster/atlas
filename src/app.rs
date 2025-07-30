@@ -1,11 +1,10 @@
 use egui::{TextBuffer as _, mutex::RwLock};
-use itertools::Itertools;
 use lazy_static::lazy_static;
 use libloading::Library;
 use log::{error, info};
 use std::collections::BTreeMap;
 
-use atlas_common::*;
+use atlas_common::{CHashOptions, HashFlags, HashFunction, HashResult, RegisterFunc, Slice};
 
 pub type ExternalRegistration = extern "C" fn(register: RegisterFunc);
 
