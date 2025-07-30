@@ -1,6 +1,7 @@
 [package]
 name = "atlas-siphash"
 version = "0.1.0"
+authors = ["nblock <nblock@nblock.dev>"]
 edition = "2024"
 
 [lib]
