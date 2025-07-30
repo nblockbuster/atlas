@@ -1,0 +1,12 @@
+[package]
+name = "atlas-common"
+version = "0.1.0"
+authors = ["nblock <nblock@nblock.dev>"]
+edition = "2024"
+
+[dependencies]
+bitflags.workspace = true
+hex.workspace = true
+ruint.workspace = true
+[lints]
+workspace = true

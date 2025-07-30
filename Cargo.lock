@@ -229,6 +229,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.98"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
+
+[[package]]
 name = "arboard"
 version = "3.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -521,25 +527,89 @@ dependencies = [
 name = "atlas"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "atlas-common",
+ "bitflags 2.9.1",
  "eframe",
  "egui",
  "env_logger",
  "hex",
  "itertools 0.14.0",
+ "lazy_static",
+ "libloading",
  "log",
- "md5",
- "murmur2",
- "paste",
+ "num-traits",
  "ruint",
  "serde",
- "sha1",
- "sha2",
- "sha3",
  "strum 0.27.2",
  "strum_macros 0.27.2",
  "wasm-bindgen-futures",
  "web-sys",
- "whirlpool",
+]
+
+[[package]]
+name = "atlas-common"
+version = "0.1.0"
+dependencies = [
+ "bitflags 2.9.1",
+ "hex",
+ "ruint",
+]
+
+[[package]]
+name = "atlas-fnv"
+version = "0.1.0"
+dependencies = [
+ "atlas-common",
+ "num-traits",
+ "paste",
+ "ruint",
+]
+
+[[package]]
+name = "atlas-md"
+version = "0.1.0"
+dependencies = [
+ "atlas-common",
+ "md-5",
+ "md2",
+ "md4",
+ "paste",
+]
+
+[[package]]
+name = "atlas-murmur"
+version = "0.1.0"
+dependencies = [
+ "atlas-common",
+ "murmur2",
+ "murmur3",
+]
+
+[[package]]
+name = "atlas-sha"
+version = "0.1.0"
+dependencies = [
+ "atlas-common",
+ "paste",
+ "sha1",
+ "sha2",
+ "sha3",
+]
+
+[[package]]
+name = "atlas-siphash"
+version = "0.1.0"
+dependencies = [
+ "atlas-common",
+ "siphasher",
+]
+
+[[package]]
+name = "atlas-xxhash"
+version = "0.1.0"
+dependencies = [
+ "atlas-common",
  "xxhash-rust",
 ]
 
@@ -2020,10 +2090,32 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
-name = "md5"
-version = "0.8.0"
+name = "md-5"
+version = "0.10.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae960838283323069879657ca3de837e9f7bbb4c7bf6ea7f1b290d5e9476d2e0"
+checksum = "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf"
+dependencies = [
+ "cfg-if",
+ "digest 0.10.7",
+]
+
+[[package]]
+name = "md2"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1f4f0f3ed25ff4f8d8d102288d92f900efc202661c884cf67dfe4f0d07c43d1f"
+dependencies = [
+ "digest 0.10.7",
+]
+
+[[package]]
+name = "md4"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7da5ac363534dce5fabf69949225e174fbf111a498bf0ff794c8ea1fba9f3dda"
+dependencies = [
+ "digest 0.10.7",
+]
 
 [[package]]
 name = "memchr"
@@ -2064,6 +2156,12 @@ name = "murmur2"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fb585ade2549a017db2e35978b77c319214fa4b37cede841e27954dd6e8f3ca8"
+
+[[package]]
+name = "murmur3"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9252111cf132ba0929b6f8e030cac2a24b507f3a4d6db6fb2896f27b354c714b"
 
 [[package]]
 name = "naga"
@@ -3162,6 +3260,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d66dc143e6b11c1eddc06d5c423cfc97062865baf299914ab64caa38182078fe"
 
 [[package]]
+name = "siphasher"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "56199f7ddabf13fe5074ce809e7d3f42b42ae711800501b5b16ea82ad029c39d"
+
+[[package]]
 name = "slab"
 version = "0.4.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3906,15 +4010,6 @@ dependencies = [
  "log",
  "thiserror 2.0.12",
  "web-sys",
-]
-
-[[package]]
-name = "whirlpool"
-version = "0.10.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f1ae50671d985c15b3214c7d969b8b520759fb3c8682444bec15ef775335a05c"
-dependencies = [
- "digest 0.10.7",
 ]
 
 [[package]]

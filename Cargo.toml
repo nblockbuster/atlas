@@ -1,14 +1,31 @@
+[workspace]
+members = [
+    "crates/atlas-common", 
+    "crates/atlas-fnv",
+    "crates/atlas-md",
+    "crates/atlas-murmur",
+    "crates/atlas-sha", "crates/atlas-siphash",
+    "crates/atlas-xxhash"
+]
+
 [package]
 name = "atlas"
 version = "0.1.0"
-authors = ["nblock <contact@nblock.dev>"]
+authors = ["nblock <nblock@nblock.dev>"]
 edition = "2024"
-include = ["LICENSE-APACHE", "LICENSE-MIT", "**/*.rs", "Cargo.toml"]
+include = ["LICENSE", "**/*.rs", "Cargo.toml"]
 rust-version = "1.85"
 
 [package.metadata.docs.rs]
 all-features = true
 targets = ["x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]
+
+[workspace.dependencies]
+bitflags = "2.9"
+ruint = { version = "1.15", features = [ "num-traits" ] }
+num-traits = "0.2"
+hex = "0.4.3"
+paste = "1.0"
 
 [dependencies]
 egui = "0.32"
@@ -24,20 +41,17 @@ log = "0.4.27"
 
 # You only need serde if you want app persistence:
 serde = { version = "1.0.219", features = ["derive"] }
-sha1 = "0.10.6"
-sha2 = "0.10.9"
-sha3 = "0.10.8"
-md5 = "0.8.0"
-murmur2 = "0.1.0"
-xxhash-rust = { version = "0.8.15", features = ["xxh32", "xxh64", "xxh3"] }
-whirlpool = "0.10.4"
-
 itertools = "0.14.0"
 strum = "0.27.2"
 strum_macros = "0.27.2"
-paste = "1.0.15"
-ruint = "1.15.0"
-hex = "0.4.3"
+hex.workspace = true
+lazy_static = "1.5.0"
+anyhow = "1.0.98"
+libloading = "0.8.8"
+bitflags.workspace = true
+ruint.workspace = true
+num-traits.workspace = true
+atlas-common.path = "crates/atlas-common"
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
@@ -75,7 +89,7 @@ opt-level = 2
 workspace = true
 
 [workspace.lints.rust]
-unsafe_code = "deny"
+# unsafe_code = "deny"
 
 elided_lifetimes_in_paths = "warn"
 future_incompatible = { level = "warn", priority = -1 }

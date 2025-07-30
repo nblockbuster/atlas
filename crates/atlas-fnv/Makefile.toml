@@ -1,0 +1,10 @@
+[tasks.build]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.build-debug]
+command = "cargo"
+args = ["build"]
+
+[tasks.build-all]
+run_task = { name = ["build"] }

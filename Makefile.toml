@@ -1,0 +1,32 @@
+[tasks.build]
+command = "cargo"
+args = ["build", "--release"]
+
+[tasks.build-all]
+run_task = { name = ["build", "copy-plugins"] }
+
+[tasks.build-debug]
+command = "cargo"
+args = ["build"]
+
+[tasks.build-all-debug]
+run_task = { name = ["build-debug", "copy-plugins-debug"] }
+
+[tasks.copy-plugins-debug]
+script_runner = "@duckscript"
+script = '''
+mkdir ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/atlas_*.so ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/atlas_*.dll ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/atlas_*.dylib ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
+'''
+
+
+[tasks.copy-plugins]
+script_runner = "@duckscript"
+script = '''
+mkdir ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/atlas_*.so ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/atlas_*.dll ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/atlas_*.dylib ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
+'''

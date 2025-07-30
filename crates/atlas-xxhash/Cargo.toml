@@ -1,0 +1,14 @@
+[package]
+name = "atlas-xxhash"
+version = "0.1.0"
+authors = ["nblock <nblock@nblock.dev>"]
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+xxhash-rust = { version = "0.8.15", features = ["xxh32", "xxh64", "xxh3"] }
+atlas-common.path = "../atlas-common"
+[lints]
+workspace = true

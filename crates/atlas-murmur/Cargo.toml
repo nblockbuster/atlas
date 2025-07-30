@@ -1,0 +1,16 @@
+[package]
+name = "atlas-murmur"
+version = "0.1.0"
+authors = ["nblock <nblock@nblock.dev>"]
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+atlas-common.path = "../atlas-common"
+murmur2 = "0.1.0"
+murmur3 = "0.5.2"
+
+[lints]
+workspace = true

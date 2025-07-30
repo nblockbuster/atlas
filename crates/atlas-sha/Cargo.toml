@@ -1,0 +1,18 @@
+[package]
+name = "atlas-sha"
+version = "0.1.0"
+authors = ["nblock <nblock@nblock.dev>"]
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+sha1 = "0.10"
+sha2 = "0.10"
+sha3 = "0.10"
+paste.workspace = true
+atlas-common.path = "../atlas-common"
+
+[lints]
+workspace = true

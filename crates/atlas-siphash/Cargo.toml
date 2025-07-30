@@ -1,0 +1,14 @@
+[package]
+name = "atlas-siphash"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+atlas-common.path = "../atlas-common"
+siphasher = "1"
+
+[lints]
+workspace = true

@@ -1,0 +1,17 @@
+[package]
+name = "atlas-fnv"
+version = "0.1.0"
+authors = ["nblock <nblock@nblock.dev>"]
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+paste.workspace = true
+ruint.workspace = true
+num-traits.workspace = true
+atlas-common.path = "../atlas-common"
+
+[lints]
+workspace = true

@@ -2,4 +2,3 @@
 
 mod app;
 pub use app::AtlasApp;
-mod hashes;
