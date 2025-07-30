@@ -105,21 +105,25 @@ jobs:
     - name: Build
       run: cargo build --verbose --release --target=${{ matrix.TARGET }}
 
-    - name: Copy Plugins
-      if: matrix.os == 'ubuntu-latest'
-      run: |
-        mkdir ./target/release/plugins
-        cp ./target/release/*.so ./target/release/plugins
+    - name: Copy Plugins (Windows)
       if: matrix.os == 'windows-latest'
       run: |
         mkdir ./target/release/plugins
         cp ./target/release/*.dll ./target/release/plugins
+
+    - name: Copy Plugins (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        mkdir ./target/release/plugins
+        cp ./target/release/*.so ./target/release/plugins
+
+    - name: Copy Plugins (MacOS)
       if: matrix.os == 'macos-latest'
       run: |
         mkdir ./target/release/plugins
         cp ./target/release/*.dylib ./target/release/plugins
         
-    - name: Publish artifact
+    - name: Publish artifact (Windows)
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
@@ -129,6 +133,7 @@ jobs:
           ./target/release/*.pdb
           ./target/release/plugins
 
+    - name: Publish artifact (Linux)
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
@@ -137,6 +142,7 @@ jobs:
           ./target/release/atlas
           ./target/release/plugins
 
+    - name: Publish artifact (MacOS-x64)
       if: matrix.TARGET == 'x86_64-apple-darwin'
       uses: actions/upload-artifact@v4
       with:
@@ -145,6 +151,7 @@ jobs:
           ./target/release/atlas
           ./target/release/plugins
 
+    - name: Publish artifact (MacOS-aarch64)
       if: matrix.TARGET == 'aarch64-apple-darwin'
       uses: actions/upload-artifact@v4
       with:
