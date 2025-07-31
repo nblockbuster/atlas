@@ -102,6 +102,7 @@ impl eframe::App for AtlasApp {
         egui::CentralPanel::default().show(ctx, |ui| {
             egui::ComboBox::from_label("Hashing Function")
                 .selected_text(&self.hasher)
+                .height(160.0)
                 .show_ui(ui, |ui| {
                     for algo in HASHERS.read().keys() {
                         ui.selectable_value(&mut self.hasher, algo.clone(), algo);

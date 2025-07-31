@@ -2,6 +2,8 @@
 [![dependency status](https://deps.rs/repo/github/nblockbuster/atlas/status.svg)](https://deps.rs/repo/github/nblockbuster/atlas)
 [![Build Status](https://github.com/nblockbuster/atlas/workflows/CI/badge.svg)](https://github.com/nblockbuster/atlas/actions?workflow=CI)
 
+[Download Latest Build](https://nightly.link/nblockbuster/atlas/workflows/rust/main)
+---
 Atlas is a tool I made in an afternoon to help me do RE work regarding hashed values.
 
 
