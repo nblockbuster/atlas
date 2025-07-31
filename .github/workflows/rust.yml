@@ -71,13 +71,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - os: macos-latest
-          toolchain: stable
-          TARGET: aarch64-apple-darwin
+        # - os: macos-latest
+        #   toolchain: stable
+        #   TARGET: aarch64-apple-darwin
 
-        - os: macos-latest
-          toolchain: stable
-          TARGET: x86_64-apple-darwin
+        # - os: macos-latest
+        #   toolchain: stable
+        #   TARGET: x86_64-apple-darwin
 
         # - os: ubuntu-latest
         #   TARGET: arm-unknown-linux-musleabihf
