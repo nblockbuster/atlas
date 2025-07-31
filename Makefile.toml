@@ -1,6 +1,6 @@
 [tasks.build]
 command = "cargo"
-args = ["build", "--release"]
+args = ["build", "--release", "${RUST_BUILD_ARGS}"]
 
 [tasks.build-all]
 run_task = { name = ["build", "copy-plugins"] }
@@ -15,18 +15,19 @@ run_task = { name = ["build-debug", "copy-plugins-debug"] }
 [tasks.copy-plugins-debug]
 script_runner = "@duckscript"
 script = '''
-mkdir ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
-glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/atlas_*.so ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
-glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/atlas_*.dll ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
-glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/atlas_*.dylib ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/debug/plugins
+mkdir ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/*.so ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/*.dll ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/*.dylib ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/debug/plugins
 '''
 
 
 [tasks.copy-plugins]
+workspace = false
 script_runner = "@duckscript"
 script = '''
-mkdir ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
-glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/atlas_*.so ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
-glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/atlas_*.dll ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
-glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/atlas_*.dylib ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/release/plugins
+mkdir ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/*.so ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/*.dll ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/plugins
+glob_cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/*.dylib ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/${RUST_TARGET_TRIPLE}/release/plugins
 '''

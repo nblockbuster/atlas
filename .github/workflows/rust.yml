@@ -111,9 +111,17 @@ jobs:
 
     - uses: actions-rs/cargo@v1
       with:
+        command: install
+        args: make --verbose
+
+    - uses: actions-rs/cargo@v1
+      env:
+        RUST_BUILD_FLAGS: '--target=${{ matrix.TARGET }}'
+        RUST_TARGET_TRIPLE: '${{ matrix.TARGET }}'
+      with:
         use-cross: true
-        command: build
-        args: --verbose --release --target=${{ matrix.TARGET }}
+        command: make
+        args: build-all --verbose
 
     - name: Copy Plugins (Windows)
       if: matrix.os == 'windows-latest'
@@ -141,7 +149,7 @@ jobs:
         path: |
           ./target/${{ matrix.TARGET }}/release/*.exe
           ./target/${{ matrix.TARGET }}/release/*.pdb
-          ./target/${{ matrix.TARGET }}/release/plugins
+          ./target/${{ matrix.TARGET }}/release/plugins/*.dll
 
     - name: Publish artifact (Linux)
       if: matrix.os == 'ubuntu-latest'
@@ -150,7 +158,7 @@ jobs:
         name: atlas-linux-x64
         path: |
           ./target/${{ matrix.TARGET }}/release/atlas
-          ./target/${{ matrix.TARGET }}/release/plugins
+          ./target/${{ matrix.TARGET }}/release/plugins/*.so
 
     - name: Publish artifact (MacOS-x64)
       if: matrix.TARGET == 'x86_64-apple-darwin'
@@ -159,7 +167,7 @@ jobs:
         name: atlas-macos-x64
         path: |
           ./target/${{ matrix.TARGET }}/release/atlas
-          ./target/${{ matrix.TARGET }}/release/plugins
+          ./target/${{ matrix.TARGET }}/release/plugins/*.dylib
 
     - name: Publish artifact (MacOS-aarch64)
       if: matrix.TARGET == 'aarch64-apple-darwin'
@@ -168,4 +176,4 @@ jobs:
         name: atlas-macos-aarch64
         path: |
           ./target/${{ matrix.TARGET }}/release/atlas
-          ./target/${{ matrix.TARGET }}/release/plugins
+          ./target/${{ matrix.TARGET }}/release/plugins/*.dylib

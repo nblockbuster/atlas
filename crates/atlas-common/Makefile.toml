@@ -1,6 +1,6 @@
 [tasks.build]
 command = "cargo"
-args = ["build", "--release"]
+args = ["build", "--release", "${RUST_BUILD_ARGS}"]
 
 [tasks.build-debug]
 command = "cargo"
