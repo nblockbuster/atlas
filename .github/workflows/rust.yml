@@ -116,7 +116,7 @@ jobs:
 
     - uses: actions-rs/cargo@v1
       env:
-        RUST_BUILD_FLAGS: '--target=${{ matrix.TARGET }}'
+        RUST_BUILD_ARGS: '--target=${{ matrix.TARGET }}'
         RUST_TARGET_TRIPLE: '${{ matrix.TARGET }}'
       with:
         use-cross: true
