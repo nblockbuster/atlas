@@ -87,7 +87,7 @@ jobs:
 
         - os: ubuntu-latest
           toolchain: stable
-          TARGET: x86_64-unknown-linux-musl
+          TARGET: x86_64-unknown-linux-gnu
 
         - os: windows-latest
           toolchain: stable
