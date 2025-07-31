@@ -112,7 +112,7 @@ jobs:
     - uses: actions-rs/cargo@v1
       with:
         command: install
-        args: make --verbose
+        args: cargo-make --verbose
 
     - uses: actions-rs/cargo@v1
       env:
